@@ -1,16 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { App } from './App.tsx';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { PageHook } from './pages/PageHook.tsx';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { App } from "./App.tsx";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { PageHook } from "./pages/PageHook.tsx";
+import { UserPage } from "./pages/UserPage.tsx";
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<App />} />
-        <Route path='/pageHook' element={<PageHook />} />
+        <Route path="/" element={<App />} />
+        <Route path="/pageHook" element={<PageHook />} />
+        <Route path="pageHook/users/:id" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

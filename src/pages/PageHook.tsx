@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Users } from "../services/user";
+import { UserInfo, Users } from "../services/user";
 import { useFetchData } from "../hooks/useFetchData";
 import { useEffect, useState } from "react";
-import { User } from "../services/user";
+import { ShowUsers } from "../components/ShowUser";
 
 interface Querys<T> {
   key: string;
@@ -44,13 +44,18 @@ function useQueryParams<T>({ key, initialValue, transformer, resetOn }: Querys<T
 export function PageHook() {
   const navigate = useNavigate();
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [searchQuery, setSeachQuery] = useQueryParams({
     key: "search",
     initialValue: "",
     transformer: String,
     resetOn: "",
   });
+
+  const [filteredUserDetails, setFilteredUserDetails] = useState<UserInfo[]>([]);
+
+  useEffect(() => {
+    Users(searchQuery).then((data) => setFilteredUserDetails(data));
+  }, [searchQuery]);
 
   const {
     data: userDetails,
@@ -76,20 +81,6 @@ export function PageHook() {
     return navigate("/");
   };
 
-  function filterUsers(userDetails: User[], searchQuery: string): User[] {
-    const query = searchQuery.toLowerCase().trim();
-    if (!query) {
-      return userDetails;
-    }
-    return userDetails.filter((user) =>
-      Object.values(user).some((value) => typeof value === "string" && value.toLowerCase().includes(query))
-    );
-  }
-
-  console.log(userDetails);
-
-  const filteredUserDetails = filterUsers(userDetails, searchQuery);
-
   return (
     <Box>
       <Typography variant="h2">Alta pagina</Typography>
@@ -98,18 +89,7 @@ export function PageHook() {
       </Button>
       <TextField label="search" value={searchQuery} onChange={(e) => setSeachQuery(e.target.value)}></TextField>
       {filteredUserDetails.length > 0 ? (
-        filteredUserDetails.map((data) => (
-          <Box key={data.id}>
-            <Typography variant="body1">{data.id}</Typography>
-            <Typography variant="h5">{data.username}</Typography>
-            <Typography variant="h6">{data.name}</Typography>
-            <Typography variant="body1">{data.phone}</Typography>
-            <Typography variant="body1">{data.email}</Typography>
-            <Typography variant="body1">{data.address.city}</Typography>
-            <Typography variant="body1">{data.address.street}</Typography>
-            <br />
-          </Box>
-        ))
+        <ShowUsers userDisplay={filteredUserDetails} />
       ) : (
         <Typography variant="h5">Information about user not found</Typography>
       )}
