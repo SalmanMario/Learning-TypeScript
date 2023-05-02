@@ -7,14 +7,13 @@ import {
   Typography,
 } from "@mui/material";
 import { UserInfo } from "../services/user";
-import { useNavigate } from "react-router-dom";
 import { routes, useNavigation } from "../routes/index";
 
 export function UserCard({ data }: { data: UserInfo }) {
   const { navigate } = useNavigation();
 
   const goToUserPage = () => {
-    navigate(routes.userById, { id: data.id });
+    navigate(routes.userById, { id: data.id.toString() });
   };
   return (
     <Grid sx={{ my: 4 }} item lg={3} md={4} sm={6} xs={12}>
