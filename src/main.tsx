@@ -6,6 +6,7 @@ import { PageHook } from "./pages/PageHook.tsx";
 import { UserPage } from "./pages/UserPage.tsx";
 import { AppLayout } from "./layouts/AppLayout.tsx";
 import { CssBaseline } from "@mui/material";
+import { route, routes } from "./routes/index";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -13,9 +14,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
-          <Route path="/" element={<App />} />
-          <Route path="/pageHook" element={<PageHook />} />
-          <Route path="pageHook/users/:id" element={<UserPage />} />
+          <Route path={route(routes.root)} element={<App />} />
+          <Route path={route(routes.pageHook)} element={<PageHook />} />
+          <Route path={route(routes.userById, ["id"])} element={<UserPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
