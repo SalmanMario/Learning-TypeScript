@@ -3,12 +3,13 @@ import { Button, Typography } from "@mui/material";
 import Box from "@mui/material/Box/Box";
 import "./App.css";
 import { useNavigate } from "react-router-dom";
+import { routes, useNavigation } from "./routes/index";
 
 export function App() {
-  const navigate = useNavigate();
+  const { navigate } = useNavigation();
 
   const goToHookPage = () => {
-    navigate("/pageHook");
+    navigate(routes.pageHook);
   };
 
   return (

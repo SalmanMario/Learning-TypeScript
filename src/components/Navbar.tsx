@@ -13,10 +13,15 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
+import { routes, useNavigation } from "../routes/index";
 
 export function Navbar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -33,14 +38,14 @@ export function Navbar() {
     setAnchorElUser(null);
   };
 
-  const navigate = useNavigate();
+  const { navigate } = useNavigation();
 
   const goToHome = () => {
-    navigate("/");
+    navigate(routes.root);
   };
 
   const goToPageHook = () => {
-    navigate("/pageHook");
+    navigate(routes.pageHook);
   };
 
   return (
