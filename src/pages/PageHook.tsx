@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Button, CircularProgress, TextField, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Grid, TextField, Typography } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserInfo, Users } from "../services/user";
 import { useFetchData } from "../hooks/useFetchData";
@@ -83,11 +83,19 @@ export function PageHook() {
 
   return (
     <Box>
-      <Typography variant="h2">Alta pagina</Typography>
-      <Button variant="contained" onClick={goToMainPage}>
-        Go to main Page
-      </Button>
-      <TextField label="search" value={searchQuery} onChange={(e) => setSeachQuery(e.target.value)}></TextField>
+      <Typography textAlign="center" my={4} variant="h3">
+        Page Hook with Search bar
+      </Typography>
+      <Grid container>
+        <Grid item md={6}>
+          <TextField label="search" value={searchQuery} onChange={(e) => setSeachQuery(e.target.value)}></TextField>
+        </Grid>
+        <Grid sx={{ display: "flex", justifyContent: "end", alignItems: "center" }} item md={6}>
+          <Button variant="contained" onClick={goToMainPage}>
+            Go to main Page
+          </Button>
+        </Grid>
+      </Grid>
       {filteredUserDetails.length > 0 ? (
         <ShowUsers userDisplay={filteredUserDetails} />
       ) : (

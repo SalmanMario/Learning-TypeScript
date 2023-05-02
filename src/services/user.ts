@@ -6,6 +6,7 @@ export type UserInfo = {
   email: string;
   phone: string;
   username: string;
+  website: string;
   address: {
     city: string;
     street: string;
@@ -13,6 +14,10 @@ export type UserInfo = {
       lat: string;
       lng: string;
     };
+  };
+  company: {
+    name: string;
+    catchPhrase: string;
   };
 };
 
