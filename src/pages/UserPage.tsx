@@ -1,12 +1,12 @@
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { UserInfo, UserById } from "../services/user";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useFetchData } from "../hooks/useFetchData";
 import { AppRouteParams, routes, useNavigation } from "../routes/index";
 
 export function UserPage() {
-  const { id } = useParams<AppRouteParams["userById"]>();
+  const { id = "" } = useParams<AppRouteParams["userById"]>();
   const [userData, setUserData] = useState<UserInfo | null>(null);
 
   const { navigate } = useNavigation();

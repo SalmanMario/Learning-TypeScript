@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { UserInfo, Users } from "../services/user";
 import { useFetchData } from "../hooks/useFetchData";
 import { useEffect, useState } from "react";
