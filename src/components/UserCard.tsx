@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import { UserInfo } from "../services/user";
 import { routes, useNavigation } from "../routes/index";
 
@@ -13,12 +6,12 @@ export function UserCard({ data }: { data: UserInfo }) {
   const { navigate } = useNavigation();
 
   const goToUserPage = () => {
-    navigate(routes.userById, { id: data.id.toString() });
+    navigate(routes.userById, { id: data.id.toString(), name: "string" });
   };
   return (
     <Grid sx={{ my: 4 }} item lg={3} md={4} sm={6} xs={12}>
       <Box>
-        <Card sx={{ maxWidth: "100%", height: 300, border: "2px solid blue" }}>
+        <Card sx={{ maxWidth: "100%", border: "2px solid blue" }}>
           <CardContent>
             <Typography
               sx={{

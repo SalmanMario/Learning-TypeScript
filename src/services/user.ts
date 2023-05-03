@@ -30,15 +30,32 @@ type Post = {
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 
 export async function Users(searchQuery: string): Promise<UserInfo[]> {
-  return fetchAndParse(`${BASE_URL}/users?search=${encodeURIComponent(searchQuery)}`).then(
-    (userDetails: UserInfo[]) => {
-      const query = searchQuery.toLowerCase().trim();
-      if (!query) {
-        return userDetails;
-      }
-      return userDetails.filter((user) => JSON.stringify(user).toLowerCase().includes(query.toLowerCase()));
-    }
-  );
+  const query = searchQuery.toLowerCase().trim();
+  if (!query) {
+    return fetchAndParse(`${BASE_URL}/users?search=${encodeURIComponent(searchQuery)}`);
+  }
+  const searchWords = query.split(" ");
+  return fetchAndParse(`${BASE_URL}/users`).then((userDetails: UserInfo[]) => {
+    return filterUserDetails(userDetails, searchWords);
+  });
+}
+
+// filter function to search working in
+function filterUserDetails(userDetails: UserInfo[], searchWords: string[]): UserInfo[] {
+  return userDetails.filter((user) => {
+    const {
+      name,
+      email,
+      phone,
+      username,
+      address: { city, street },
+      company: { name: companyName, catchPhrase },
+    } = user;
+    const lowerCasedFields = [name, email, phone, username, city, street, companyName, catchPhrase].map((field) =>
+      field.toLowerCase()
+    );
+    return searchWords.every((word) => lowerCasedFields.some((field) => field.includes(word)));
+  });
 }
 
 export function Posts(): Promise<Post[]> {

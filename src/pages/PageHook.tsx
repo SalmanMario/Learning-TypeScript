@@ -1,12 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, CircularProgress, Grid, TextField, Typography } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import { UserInfo, Users } from "../services/user";
 import { useFetchData } from "../hooks/useFetchData";
@@ -21,12 +14,7 @@ interface Querys<T> {
   resetOn: string;
 }
 
-function useQueryParams<T>({
-  key,
-  initialValue,
-  transformer,
-  resetOn,
-}: Querys<T>) {
+function useQueryParams<T>({ key, initialValue, transformer, resetOn }: Querys<T>) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentElement = transformer(searchParams.get(key) ?? initialValue);
@@ -64,13 +52,28 @@ export function PageHook() {
     resetOn: "",
   });
 
-  const [filteredUserDetails, setFilteredUserDetails] = useState<UserInfo[]>(
-    []
-  );
+  const [filteredUserDetails, setFilteredUserDetails] = useState<UserInfo[]>([]);
 
   useEffect(() => {
     Users(searchQuery).then((data) => setFilteredUserDetails(data));
   }, [searchQuery]);
+
+  const [showButton, setShowButton] = useState(false);
+
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const handleScrollButtonVisibilty = () => {
+      window.pageYOffset > 300 ? setShowButton(true) : setShowButton(false);
+    };
+    window.addEventListener("scroll", handleScrollButtonVisibilty);
+
+    return () => {
+      window.removeEventListener("scroll", handleScrollButtonVisibilty);
+    };
+  }, []);
 
   const {
     data: userDetails,
@@ -101,19 +104,16 @@ export function PageHook() {
       <Typography textAlign="center" my={4} variant="h3">
         Page Hook with Search bar
       </Typography>
+      {showButton && (
+        <Button sx={{ position: "fixed" }} variant="contained" onClick={handleScrollToTop}>
+          SUNT ORB SI NU VAD BUTONUL
+        </Button>
+      )}
       <Grid container>
         <Grid item md={6}>
-          <TextField
-            label="search"
-            value={searchQuery}
-            onChange={(e) => setSeachQuery(e.target.value)}
-          ></TextField>
+          <TextField label="search" value={searchQuery} onChange={(e) => setSeachQuery(e.target.value)}></TextField>
         </Grid>
-        <Grid
-          sx={{ display: "flex", justifyContent: "end", alignItems: "center" }}
-          item
-          md={6}
-        >
+        <Grid sx={{ display: "flex", justifyContent: "end", alignItems: "center" }} item md={6}>
           <Button variant="contained" onClick={goToMainPage}>
             Go to main Page
           </Button>
