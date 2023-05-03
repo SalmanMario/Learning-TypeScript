@@ -58,23 +58,6 @@ export function PageHook() {
     Users(searchQuery).then((data) => setFilteredUserDetails(data));
   }, [searchQuery]);
 
-  const [showButton, setShowButton] = useState(false);
-
-  const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    const handleScrollButtonVisibilty = () => {
-      window.pageYOffset > 300 ? setShowButton(true) : setShowButton(false);
-    };
-    window.addEventListener("scroll", handleScrollButtonVisibilty);
-
-    return () => {
-      window.removeEventListener("scroll", handleScrollButtonVisibilty);
-    };
-  }, []);
-
   const {
     data: userDetails,
     loading,
@@ -104,11 +87,6 @@ export function PageHook() {
       <Typography textAlign="center" my={4} variant="h3">
         Page Hook with Search bar
       </Typography>
-      {showButton && (
-        <Button sx={{ position: "fixed" }} variant="contained" onClick={handleScrollToTop}>
-          SUNT ORB SI NU VAD BUTONUL
-        </Button>
-      )}
       <Grid container>
         <Grid item md={6}>
           <TextField label="search" value={searchQuery} onChange={(e) => setSeachQuery(e.target.value)}></TextField>

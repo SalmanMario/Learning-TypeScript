@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { AppRouteParams, routes, useNavigation } from "../routes";
 import { useParams } from "react-router-dom";
 
@@ -13,6 +13,7 @@ export function TestPage() {
 
   return (
     <Box>
+      <Typography variant="h5">Page with number {id}</Typography>
       <Button variant="contained" onClick={goToHome}>
         Home Page
       </Button>
